@@ -59,6 +59,14 @@ class Form {
         this.errors.clear()
     }
 
+    post(url) {
+        return this.submit('post', url)
+    }
+
+    delete(url) {
+        return this.submit('delete', url)
+    }
+
     submit(requestType, url) {
         return new Promise((resolve, reject) => {
             axios[requestType](url, this.data())
@@ -97,9 +105,7 @@ new Vue({
 
     methods: {
         onSubmit() {
-            this.form.submit('post', '/projects')
-                .then(data => console.log(data))
-                .catch(errors => console.log(errors))
+            this.form.post('/projects')
         }
     }
 });
