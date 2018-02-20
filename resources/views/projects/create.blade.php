@@ -7,7 +7,7 @@
 </head>
 <body>
     <div id="app" class="container">
-        @include('projects.list')
+        {{--@include('projects.list')--}}
 
         <form method="post" action="/projects" @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">
             <div class="control">
