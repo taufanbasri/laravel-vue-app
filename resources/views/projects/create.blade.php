@@ -8,7 +8,7 @@
 <body>
     <div id="app" class="container">
         {{--@include('projects.list')--}}
-
+        <example></example>
         <form method="post" action="/projects" @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">
             <div class="control">
                 <label for="name" class="label">Project Name:</label>
@@ -26,8 +26,6 @@
         </form>
     </div>
 
-    <script src="/js/axios.min.js"></script>
-    <script src="/js/vue.js"></script>
     <script src="/js/app.js"></script>
 </body>
 </html>
