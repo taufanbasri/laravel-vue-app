@@ -2,10 +2,13 @@ let webpack = require('webpack');
 let path = require('path')
 
 module.exports = {
-    entry: './resources/assets/js/app.js',
+    entry: {
+        app: './resources/assets/js/app.js',
+        vendor: ['vue', 'axios']
+    },
     output: {
         path: path.resolve(__dirname, 'public/js'),
-        filename: 'app.js',
+        filename: '[name].js',
         publicPath: './public'
     },
 
@@ -13,7 +16,7 @@ module.exports = {
         rules: [
             {
                 test: /\.js$/,
-                exlude: /node_modules/,
+                exclude: /node_modules/,
                 loader: 'babel-loader'
             }
         ]
@@ -25,7 +28,11 @@ module.exports = {
         }
     },
 
-    plugins: []
+    plugins: [
+        new webpack.optimize.CommonsChunkPlugin({
+            names: ['vendor']
+        })
+    ]
 }
 
 if (process.env.NODE_ENV === 'production') {
@@ -33,8 +40,16 @@ if (process.env.NODE_ENV === 'production') {
         new webpack.optimize.UglifyJsPlugin({
             sourcemap: true,
             compress: {
-                warning: false
+                warnings: false
             }
         })
-    )
+    );
+
+    module.exports.plugins.push(
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: 'production'
+            }
+        })
+    );
 }
